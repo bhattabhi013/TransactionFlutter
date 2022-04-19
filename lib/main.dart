@@ -4,15 +4,19 @@ import 'dart:async';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:flutter/services.dart';
+import 'package:transactions/model/images_model.dart';
 import 'package:transactions/model/transactions_model.dart';
+import 'package:transactions/screens/offline_image_save.dart';
 import 'package:transactions/screens/transaction_page.dart';
 import 'package:unique_identifier/unique_identifier.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Hive.initFlutter();
+await Hive.initFlutter();
   Hive.registerAdapter(TransactionAdapter());
-  await Hive.openBox<Transaction>('transactions');
+  Hive.registerAdapter(ImageAdapter());
+  // await Hive.openBox<Transaction>('transactions');
+  await Hive.openBox<Images>('images');
   runApp(MyApp());
 }
 
@@ -58,7 +62,7 @@ class _MyAppState extends State<MyApp> {
       //     child: new Text('Running on device with id: $_identifier\n'),
       //   ),
       // ),
-      home: TransactionPage(),
+      home: ImagesDemoScreen(),
     );
   }
 }
